@@ -108,6 +108,7 @@ public class Completion {
                     break;
                 }
             }
+            executor.shutdown();
         } catch (InterruptedException | ExecutionException e) {
             // 容错异常日志 此处会报 睡眠中断异常 sleep interrupted ，因为会被终止
         } finally {
