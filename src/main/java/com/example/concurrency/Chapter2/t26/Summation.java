@@ -2,6 +2,7 @@ package com.example.concurrency.Chapter2.t26;
 
 import com.example.concurrency.utils.Utils;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
@@ -9,6 +10,7 @@ import java.util.concurrent.RecursiveTask;
 
 /**
  * 数组求和
+ * https://www.liaoxuefeng.com/article/1146802219354112
  */
 public class Summation {
 
@@ -85,6 +87,8 @@ public class Summation {
         Random random = new Random();
         for (int i = 0, length = arr.length; i < length; i++) {
             arr[i] = (long) random.nextInt(100);
+//            arr[i] = (long) (Math.random() * 1000);
         }
+//        System.out.println(Arrays.toString(arr));
     }
 }
