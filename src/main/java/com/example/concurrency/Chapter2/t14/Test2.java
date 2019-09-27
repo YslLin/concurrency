@@ -1,4 +1,4 @@
-package com.example.concurrency.Chapter1.t14;
+package com.example.concurrency.Chapter2.t14;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.Lock;

@@ -3,6 +3,7 @@ package com.example.concurrency.Chapter2.t16;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.StampedLock;
 import java.util.function.Function;
 
 /**
@@ -23,7 +24,7 @@ public class ObjPool<T, R> {
         }
         sem = new Semaphore(size);
     }
-
+    
     R exec(Function<T, R> func) {
         T t = null;
         try {

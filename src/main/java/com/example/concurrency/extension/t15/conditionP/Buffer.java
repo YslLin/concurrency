@@ -7,11 +7,16 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * 阻塞队列 两个条件变量
+ */
 public class Buffer {
     private int maxSize;
     private List<Date> storage;
     private Lock lock;
+    // 条件变量 队列不满
     private Condition notFull;
+    // 条件变量 队列不空
     private Condition notEmpty;
     Buffer(int size){
         maxSize = size;
