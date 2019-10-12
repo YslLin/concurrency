@@ -21,7 +21,6 @@ public class Main {
         Producer producer = new Producer(buffer);
         Consumer consumer = new Consumer(buffer);
         for (int i = 0; i < 3; i++) {
-            System.out.println(111111);
             new Thread(producer, "producer-" + i).start();
         }
         for (int i = 0; i < 3; i++) {
