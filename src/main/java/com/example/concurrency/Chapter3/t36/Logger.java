@@ -22,6 +22,8 @@ public class Logger {
     static final int batchSize = 5;
     // 只需要一个线程写日志
     ExecutorService es = Executors.newFixedThreadPool(1);
+    // "毒丸" 用于终止日志组件
+    final LogMsg poisonPill = new LogMsg(LEVEL.ERROR, "毒丸");
 
     // 启动写日志线程
     void start() {
@@ -38,6 +40,11 @@ public class Logger {
                     while (true) {
                         LogMsg log = bq.poll(5, TimeUnit.SECONDS);
                         System.out.println("任务队列取出任务");
+                        // 遇到 “毒丸” 立即停止
+                        if(poisonPill.equals(log)) {
+                            System.out.println("遇到 “毒丸” 立即停止");
+                            break;
+                        }
                         // 写日志
                         if (log != null) {
                             System.out.println("写入日志");
@@ -58,11 +65,6 @@ public class Logger {
                             curIdx = 0;
                             preFT = System.currentTimeMillis();
                         }
-                        // 遇到 “毒丸” 立即停止
-                        if(log != null && log.level == LEVEL.STOP) {
-                            System.out.println("遇到 “毒丸” 立即停止");
-                            break;
-                        }
                         // 模拟延迟
                         Utils.sleep(1);
                     }
@@ -78,7 +80,6 @@ public class Logger {
                     }
                 }
             });
-            es.shutdown();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -102,10 +103,13 @@ public class Logger {
         }
     }
 
-    // 投放 “毒丸” 停止日志组件
+    // 停止日志组件
     void stop(){
         try {
-            bq.put(new LogMsg(LEVEL.STOP, "毒丸"));
+            // 投放毒丸
+            bq.put(poisonPill);
+            // 停止线程
+            es.shutdown();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
