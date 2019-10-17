@@ -8,7 +8,7 @@ public class Utils {
         sleep(time, TimeUnit.SECONDS);
     }
 
-    static void sleep(long time, TimeUnit unit) {
+    public static void sleep(long time, TimeUnit unit) {
         try {
             unit.sleep(time);
         } catch (InterruptedException e) {
