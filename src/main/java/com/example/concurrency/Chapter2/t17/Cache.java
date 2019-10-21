@@ -7,6 +7,11 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+/**
+ * ReentrantReadWriteLock 读写锁
+ * @param <K>
+ * @param <V>
+ */
 public class Cache<K, V> {
     final Map<K, V> m = new HashMap<>();
     final ReadWriteLock rwl = new ReentrantReadWriteLock();
