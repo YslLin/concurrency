@@ -159,7 +159,7 @@ public class JavaThreadPool {
             // 延迟3s后运行
 //            exec.schedule(r, 3, TimeUnit.SECONDS);
             // 首次执行延迟 1s, 后每隔 3s 重复执行
-            // 任务执行时间 5s，该定时周期则实质为 5s
+            // 任务执行时间 5s，该定时周期则实质ForkJoinPool 为 5s
             // 当执行任务时间大于间隔时间，此方法不会重新开启一个新的任务进行执行，而是等待原有任务执行完成，马上开启下一个任务进行执行。此时，执行间隔时间已经被打乱。
 //            exec.scheduleAtFixedRate(r, 1, 3, TimeUnit.SECONDS);
             // 每次执行结束，已固定时延迟下次执行

@@ -190,18 +190,18 @@ public class Test {
         // 开始时间
         Date s = new Date();
         int max = 10000;
-        ExecutorService service = Executors.newFixedThreadPool(2);
+        ExecutorService es = Executors.newFixedThreadPool(2);
         CountDownLatch countDownLatch = new CountDownLatch(max * 2);
         for (int i = 0; i < max; i++) {
             int finalI = i;
-            service.execute(new Thread(() -> {
+            es.execute(() -> {
                 arrayList.add(finalI);
                 countDownLatch.countDown();
-            }));
-            service.execute(new Thread(() -> {
+            });
+            es.execute(() -> {
                 System.out.println(Thread.currentThread().getName() + ":" + arrayList.get(arrayList.size() - 1) + ":" + finalI);
                 countDownLatch.countDown();
-            }));
+            });
         }
         try {
             countDownLatch.await();
@@ -215,9 +215,9 @@ public class Test {
     /**
      * ConcurrentHashMap 并发容器 分段锁Map
      * 1. 分段锁，key 与 value 不能为空 会报错空指针异常
-     * 多线程环境下，使用Hashmap进行put操作会引起死循环，导致CPU利用率接近100%
+     * 多线程环境下，使用HashMap进行put操作会引起死循环，导致CPU利用率接近100%
      * HashTable之所以效率低下主要是因为其实现使用了synchronized关键字对put等操作进行加锁，而synchronized关键字加锁是对整个对象进行加锁，也就是说在进行put等修改Hash表的操作时，锁住了整个Hash表，从而使得其表现的效率低下；
-     * ConcurrentHashMap在对象中保存了一个Segment数组，即将整个Hash表划分为多个分段；而每个Segment元素，即每个分段则类似于一个Hashtable；这样，在执行put操作时首先根据hash算法定位到元素属于哪个Segment，然后对该Segment加锁即可。
+     * ConcurrentHashMap在对象中保存了一个Segment数组，即将整个Hash表划分为多个分段；而每个Segment元素，即每个分段则类似于一个HashTable；这样，在执行put操作时首先根据hash算法定位到元素属于哪个Segment，然后对该Segment加锁即可。
      */
     void exeConcurrentHashMap(){
         // 开始时间
@@ -249,7 +249,7 @@ public class Test {
      * ConcurrentSkipListMap 并发容器 跳表Map
      * 1. 查找效率高，key 与 value 不能为空 会报错空指针异常
      * 2. key 是有序的，底层是通过跳表来实现的
-     * 3. 跳表是一个链表，但是通过使用“跳跃式”查找的方式使得插入、读取数据时复杂度变成了O（logn）。
+     * 3. 跳表是一个链表，但是通过使用“跳跃式”查找的方式使得插入、读取数据时复杂度变成了O（long）。
      * 4. “先大步查找确定范围，再逐渐缩小迫近”
      * 5. 利用底层的插入、删除的CAS原子性操作，通过死循环不断获取最新的结点指针来保证不会出现竞态条件。
      */
