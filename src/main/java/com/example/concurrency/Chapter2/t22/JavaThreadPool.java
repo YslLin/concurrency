@@ -148,7 +148,7 @@ public class JavaThreadPool {
             public void run() {
                 try {
                     TimeUnit.SECONDS.sleep(5);
-                    System.out.println(Thread.currentThread().getName() + " is over " + (new Date().getTime() - oldDate.get().getTime()));
+                    System.out.println(Thread.currentThread().getName() + " is over " + (System.currentTimeMillis() - oldDate.get().getTime()));
                     oldDate.set(new Date());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
